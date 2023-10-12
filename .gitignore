@@ -1,0 +1,14 @@
+**/.DS_Store
+**/.env
+**/.npmrc
+**/node_modules
+
+/.fusion
+
+/data/db/
+/data/dumps/**
+!/data/dumps/.gitkeep
+/data/restore/**
+!/data/restore/.gitkeep
+
+/dist

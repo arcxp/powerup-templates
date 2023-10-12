@@ -1,0 +1,15 @@
+{  
+   "organization":"local",
+   "environment":"local",
+   "name":"local",
+   "production":false,
+   "environments":[  
+      {  
+         "domain":"localhost",
+         "name":"local",
+         "production":false,
+         "active":true
+      }
+   ],
+   "applications":[]
+}

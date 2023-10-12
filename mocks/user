@@ -1,0 +1,15 @@
+{
+  "displayName": "Local Developer",
+  "permissions": {
+    "PageBuilder": {
+      "global": [
+        "W",
+        "D",
+        "P",
+        "VRP",
+        "ERP",
+        "DT"
+      ]
+    }
+  }
+}

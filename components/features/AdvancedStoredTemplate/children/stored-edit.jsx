@@ -1,27 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useContent } from 'fusion:content';
 import './stored.scss';
 import * as ComposerHandler from '@arcxp/shared-powerup-composer-utils';
+import { movieKey } from 'fusion:environment';
 
 const AdvancedEdit = () => {
   const [title, setTitle] = useState('');
   const [payload, setPayload] = useState({});
-  const [movieData, setMovieData] = useState({});
-  const [search, setSearch] = useState(false);
-
-  let newData = {};
-  newData = useContent({
-    source: title.length ? 'movieAPI' : '',
-    query: {
-      title: title,
-    },
-  });
-  setTimeout(() => {
-    if (search) {
-      setMovieData(newData);
-      setSearch(false);
-    }
-  }, 1000);
+  const [movie, setMovie] = useState({});
 
   useEffect(() => {
     ComposerHandler.sendMessage('ready', {
@@ -30,22 +15,26 @@ const AdvancedEdit = () => {
 
     const data = ComposerHandler.getPayload();
     setPayload(data);
-    setMovieData(data?.config?.movieData);
+    setMovie(data?.config?.movie);
   }, []);
 
   const handleFieldChange = (value) => {
     setTitle(value);
   };
 
-  const searchMovie = () => {
-    setSearch(true);
+  const search = async () => {
+    const response = await fetch(
+      `https://www.omdbapi.com/?apikey=${movieKey}&t=${title}`
+    );
+    const movie = await response.json();
+    setMovie(movie);
   };
 
   const save = () => {
     const ansCustomEmbed = {
       ...payload,
       config: {
-        movieData,
+        movie,
       },
     };
     ComposerHandler.sendMessage('data', ansCustomEmbed);
@@ -69,21 +58,26 @@ const AdvancedEdit = () => {
         ></input>
       </div>
       <br />
-      {movieData?.Title?.length > 0 && (
+      {movie?.Title?.length > 0 && (
         <div>
-          <h1>Title: {movieData?.Title}</h1>
-          <p>Year: {movieData?.Year}</p>
-          <p>Rated: {movieData?.Rated}</p>
-          <p>Released: {movieData?.Released}</p>
-          <p>Runtime: {movieData?.Runtime}</p>
-          <img src={movieData?.Poster} />
+          <h1>Title: {movie?.Title}</h1>
+          <p>Year: {movie?.Year}</p>
+          <p>Rated: {movie?.Rated}</p>
+          <p>Released: {movie?.Released}</p>
+          <p>Runtime: {movie?.Runtime}</p>
+          <img src={movie?.Poster} />
         </div>
       )}
       <br />
       <div className="btns-container">
         <button onClick={cancel}>Cancel</button>
-        <button onClick={searchMovie}>Search</button>
-        <button disabled={!title.length} onClick={save}>
+        <button disabled={!title.length} onClick={search}>
+          Search
+        </button>
+        <button
+          disabled={!title.length && !Object.keys(movie).length}
+          onClick={save}
+        >
           Save
         </button>
       </div>

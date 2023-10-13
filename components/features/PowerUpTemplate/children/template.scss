@@ -5,7 +5,7 @@
 
     button {
         border: 0;
-        width: 35%;
+        width: 25%;
         padding: 10px;
         cursor: pointer;
         background-color: #00B4CC;
@@ -20,9 +20,8 @@
     .search-input {
         width: 100%;
         border: 1px solid #00B4CC;
-        border-right: none;
         padding: 11px;
-        border-radius: 5px 0 0 5px;
+        border-radius: 5px;
         outline: none;
     }
     
@@ -43,7 +42,7 @@
     }
 
     .btns-container{
-        width: 50%;
+        width: 60%;
         margin: auto;
         display: flex;
         justify-content: space-around;

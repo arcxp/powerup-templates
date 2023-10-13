@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useContent } from 'fusion:content';
 import './advanced.scss';
 import * as ComposerHandler from '@arcxp/shared-powerup-composer-utils';
+import { movieKey } from 'fusion:environment';
 
 const AdvancedEdit = () => {
   const [title, setTitle] = useState('');
-  const [movie, setMovie] = useState('');
+  const [movie, setMovie] = useState({});
   const [payload, setPayload] = useState({});
-
-  let movieData = {};
-  movieData = useContent({
-    source: movie.length ? 'movieAPI' : '',
-    query: {
-      title: movie,
-    },
-  });
 
   useEffect(() => {
     ComposerHandler.sendMessage('ready', {
@@ -23,7 +15,6 @@ const AdvancedEdit = () => {
 
     const data = ComposerHandler.getPayload();
     setTitle(data?.config?.title);
-    setMovie(data?.config?.title);
     setPayload(data);
   }, []);
 
@@ -31,8 +22,13 @@ const AdvancedEdit = () => {
     setTitle(value);
   };
 
-  const searchMovie = () => {
-    setMovie(title);
+  const search = async () => {
+    console.log('HITTTTTT');
+    const response = await fetch(
+      `https://www.omdbapi.com/?apikey=${movieKey}&t=${title}`
+    );
+    const movie = await response.json();
+    setMovie(movie);
   };
 
   const save = () => {
@@ -49,6 +45,10 @@ const AdvancedEdit = () => {
     ComposerHandler.sendMessage('cancel');
   };
 
+  if (title.length && !Object.keys(movie).length) {
+    search();
+  }
+
   return (
     <div className="container advanced-search">
       <h2>Edit Title</h2>
@@ -63,21 +63,23 @@ const AdvancedEdit = () => {
         ></input>
       </div>
       <br />
-      {movieData?.Title?.length > 0 && (
+      {movie?.Title?.length > 0 && (
         <div>
-          <h1>Title: {movieData?.Title}</h1>
-          <p>Year: {movieData?.Year}</p>
-          <p>Rated: {movieData?.Rated}</p>
-          <p>Released: {movieData?.Released}</p>
-          <p>Runtime: {movieData?.Runtime}</p>
-          <img src={movieData?.Poster} />
+          <h1>Title: {movie?.Title}</h1>
+          <p>Year: {movie?.Year}</p>
+          <p>Rated: {movie?.Rated}</p>
+          <p>Released: {movie?.Released}</p>
+          <p>Runtime: {movie?.Runtime}</p>
+          <img src={movie?.Poster} />
         </div>
       )}
       <br />
       <div className="btns-container">
         <button onClick={cancel}>Cancel</button>
-        <button onClick={searchMovie}>Search</button>
-        <button disabled={!title.length} onClick={save}>
+        <button disabled={!title.length} onClick={search}>
+          Search
+        </button>
+        <button disabled={!Object.keys(movie).length} onClick={save}>
           Save
         </button>
       </div>

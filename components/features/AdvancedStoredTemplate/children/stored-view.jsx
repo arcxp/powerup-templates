@@ -11,7 +11,7 @@ const AdvancedView = () => {
     });
 
     const data = ComposerHandler.getPayload();
-    setMovie(data?.config?.movieData);
+    setMovie(data?.config?.movie);
   }, []);
 
   return (

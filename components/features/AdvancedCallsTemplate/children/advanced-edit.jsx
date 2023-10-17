@@ -23,7 +23,6 @@ const AdvancedEdit = () => {
   };
 
   const search = async () => {
-    console.log('HITTTTTT');
     const response = await fetch(
       `https://www.omdbapi.com/?apikey=${movieKey}&t=${title}`
     );
@@ -53,7 +52,7 @@ const AdvancedEdit = () => {
     <div className="container advanced-search">
       <h2>Edit Title</h2>
       <br />
-      <div className="search-container">
+      <div className="advanced-search-container">
         <input
           type="text"
           className="form-control search-input"

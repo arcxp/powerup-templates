@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import { sendMessage, parseQueryString } from '../../../../util/powerups/index';
 import './template.scss';
 import * as ComposerHandler from '@arcxp/shared-powerup-composer-utils';
 

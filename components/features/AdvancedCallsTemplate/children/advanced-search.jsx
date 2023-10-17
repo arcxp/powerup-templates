@@ -45,7 +45,7 @@ const AdvancedSearch = () => {
     <div className="container advanced-search">
       <h2>Find a Movie Title</h2>
       <br />
-      <div className="search-container">
+      <div className="advanced-search-container">
         <input
           type="text"
           className="form-control search-input"

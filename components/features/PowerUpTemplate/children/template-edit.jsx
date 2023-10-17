@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import get from 'lodash.get';
-// import {
-//   sendMessage,
-//   getKey,
-//   parseQueryString,
-// } from '../../../../util/powerups/index';
 import './template.scss';
 import * as ComposerHandler from '@arcxp/shared-powerup-composer-utils';
 
 const TemplateEdit = () => {
   const [headline, setHeadline] = useState('');
+  const [payload, setPayload] = useState({});
 
   useEffect(() => {
     ComposerHandler.sendMessage('ready', {
@@ -18,6 +13,7 @@ const TemplateEdit = () => {
 
     const data = ComposerHandler.getPayload();
     setHeadline(data?.config?.headline);
+    setPayload(data);
   }, []);
 
   const handleFieldChange = (value) => {
@@ -26,6 +22,7 @@ const TemplateEdit = () => {
 
   const save = () => {
     const ansCustomEmbed = {
+      ...payload,
       config: {
         headline,
       },
@@ -41,7 +38,7 @@ const TemplateEdit = () => {
     <div className="container template-search">
       <h2>Edit Headline</h2>
       <br />
-      <div className="search-container">
+      <div className="template-search-container">
         <input
           type="text"
           className="form-control search-input"

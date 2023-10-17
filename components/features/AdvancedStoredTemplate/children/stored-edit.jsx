@@ -48,7 +48,7 @@ const AdvancedEdit = () => {
     <div className="container advanced-search">
       <h2>Edit Title</h2>
       <br />
-      <div className="search-container">
+      <div className="stored-search-container">
         <input
           type="text"
           className="form-control search-input"

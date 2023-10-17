@@ -1,7 +1,9 @@
 .template-search {
     background-color: white;
     padding: 50px;
-    box-shadow: 0px 0px 4px #c3c2c2;
+    border: 1px solid gray;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px #c3c2c2;
 
     button {
         border: 0;
@@ -48,7 +50,7 @@
         justify-content: space-around;
     }
     
-    .search-container {
+    .template-search-container {
         width: 100%;
         position: relative;
         display: flex;

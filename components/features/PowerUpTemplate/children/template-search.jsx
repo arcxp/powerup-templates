@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { sendMessage, getKey } from '../../../../util/powerups/index';
 import './template.scss';
 import * as ComposerHandler from '@arcxp/shared-powerup-composer-utils';
 
@@ -17,7 +16,9 @@ const TemplateSearch = () => {
   };
 
   const save = () => {
+    const ansStarter = ComposerHandler.getStarterPowerUpANS();
     const ansCustomEmbed = {
+      ...ansStarter,
       config: {
         headline,
       },
@@ -33,7 +34,7 @@ const TemplateSearch = () => {
     <div className="container template-search">
       <h2>Add A Headline</h2>
       <br />
-      <div className="search-container">
+      <div className="template-search-container">
         <input
           type="text"
           className="form-control search-input"

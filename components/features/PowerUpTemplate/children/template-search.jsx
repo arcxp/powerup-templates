@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './template.scss';
 import * as ComposerHandler from '@arcxp/shared-powerup-composer-utils';
 
+//This component is the first frame you see when you open the Power-Up in the UI
+//It captures the message in local state and adds it to the ANS on save
 const TemplateSearch = () => {
   const [headline, setHeadline] = useState('');
 
   useEffect(() => {
+    //Composer always requires a "ready" message
     ComposerHandler.sendMessage('ready', {
       height: document.documentElement.scrollHeight,
     });
@@ -16,17 +19,21 @@ const TemplateSearch = () => {
   };
 
   const save = () => {
+    //getStarterPowerUpANS creates an object with the necessary ANS keys
     const ansStarter = ComposerHandler.getStarterPowerUpANS();
     const ansCustomEmbed = {
       ...ansStarter,
+      //Your data is stored in the config object
       config: {
         headline,
       },
     };
+    //Save the data by sending the ANS object with a "data" message
     ComposerHandler.sendMessage('data', ansCustomEmbed);
   };
 
   const cancel = () => {
+    //Cancel the iFrame by sending a "cancel" message
     ComposerHandler.sendMessage('cancel');
   };
 

@@ -3,11 +3,14 @@ import './stored.scss';
 import * as ComposerHandler from '@arcxp/shared-powerup-composer-utils';
 import { movieKey } from 'fusion:environment';
 
+//This component is the first frame you see when you open the Power-Up in the UI
+//It allows you to search for a movie title, which calls the API and displays it
 const AdvancedSearch = () => {
   const [title, setTitle] = useState('');
   const [movie, setMovie] = useState({});
 
   useEffect(() => {
+    //Composer always requires a "ready" message
     ComposerHandler.sendMessage('ready', {
       height: document.documentElement.scrollHeight,
     });
@@ -18,6 +21,7 @@ const AdvancedSearch = () => {
   };
 
   const search = async () => {
+    //Here we are calling an API to get data for the movie being searched for
     const response = await fetch(
       `https://www.omdbapi.com/?apikey=${movieKey}&t=${title}`
     );
@@ -26,18 +30,23 @@ const AdvancedSearch = () => {
   };
 
   const save = () => {
+    //getStarterPowerUpANS creates an object with the necessary ANS keys
     const ansStarter = ComposerHandler.getStarterPowerUpANS();
     const ansCustomEmbed = {
       ...ansStarter,
+      //Your data is stored in the config object
+      //Here we are storing all of the movie data (vs just the title)
+      //So we don't have to make another API call in the VIEW component
       config: {
         movie,
       },
     };
-
+    //Save the data by sending the ANS object with a "data" message
     ComposerHandler.sendMessage('data', ansCustomEmbed);
   };
 
   const cancel = () => {
+    //Cancel the iFrame by sending a "cancel" message
     ComposerHandler.sendMessage('cancel');
   };
 

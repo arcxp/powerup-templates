@@ -4,6 +4,8 @@ import StoredSearch from './children/stored-search.jsx';
 import StoredView from './children/stored-view.jsx';
 import StoredEdit from './children/stored-edit.jsx';
 
+//This component is the Block that is added to a page
+//and it controls which frame to display based on the URL
 const StoredTemplate = () => {
   const [actionID, setActionID] = useState('');
 

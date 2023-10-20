@@ -4,6 +4,8 @@ import TemplateSearch from './children/template-search.jsx';
 import TemplateView from './children/template-view.jsx';
 import TemplateEdit from './children/template-edit.jsx';
 
+//This component is the Block that is added to a page
+//and it controls which frame to display based on the URL
 const PowerUpTemplate = () => {
   const [actionID, setActionID] = useState('');
 
